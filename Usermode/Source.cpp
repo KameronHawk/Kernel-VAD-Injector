@@ -7,6 +7,12 @@
 
 
 int main() {
+	
+
+
+
+	
+
 	HANDLE col;
 	col = GetStdHandle(STD_OUTPUT_HANDLE);
 	
