@@ -2,7 +2,7 @@
 Driver DLL Injector
 Description
 
-Driver DLL Injector is a powerful tool that allows users to load drivers of their choice using their preferred mapper. By leveraging the capabilities of an unsigned driver loader, such as KDmapper, this injector empowers users to expand their system's functionalities and explore new possibilities.
+Driver DLL Injector is a powerful tool that allows users to load drivers of their choice using their preferred mapper. By leveraging the capabilities of an unsigned driver loader, such as KDmapper, this injector was built and tested on Windows 10 2004 x64 processes
 
 ## Driver Portion:
 
