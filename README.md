@@ -35,9 +35,26 @@ To use the Driver DLL Injector, follow these steps:
     5. Launch usermode application and wait for Hello World message box.
 
 
+## Detection Vectors
+* Page Table walks, Stack Walks, etc.
+* WDF will list the driver loaded because it is not cleared like MmUnLoadedDrivers
+* The usermode thread will have an insane amount of CPU cycle time spent in kernel land, check task manager for "Kernel time"
+
+
 ## Issues Encountered
  When making this project, there were several blocks along the way. Some of the following were:
 
  - DLL crashing because the DLL properties were setup wrongly. Setting ```/sdl-```, ```/GS-```, and runtime library to ```/MT``` fixed my issues with crashing.
  - Mapping the driver using a mapper would cause a ```KMODE_EXCEPTION``` BSOD, fixing this by setting the driver property ```/GS-```.
  - Discords overlay takes time to initalize, if you try to inject before the overlay is initalized you will crash because of NULL pointers.
+
+## Credits
+[ModMap](https://github.com/btbd/modmap) - for showing VAD manipulation
+
+[SkCrypt](https://github.com/skadro-official/skCrypter) - for the encrpytion 
+
+[Stealthy Kernel Mode Injector](https://github.com/charliewolfe/Stealthy-Kernelmode-Injector) - for the driver base
+
+[Poseidon](https://github.com/sondernextdoor/Poseidon) - for trapping um thread in kernel land
+
+[FACE INJECTOR](https://github.com/KANKOSHEV/face-injector-v2) - for the shellcode
