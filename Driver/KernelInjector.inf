@@ -1,0 +1,84 @@
+;
+; KernelInjector.inf
+;
+
+[Version]
+Signature="$WINDOWS NT$"
+Class=Processor ; TODO: edit Class
+ClassGuid={50127dc3-0f36-415e-a6cc-4cb3be910b65} ; TODO: edit ClassGuid
+Provider=%ManufacturerName%
+CatalogFile=KernelInjector.cat
+DriverVer= ; TODO: set DriverVer in stampinf property pages
+PnpLockDown=1
+
+[DestinationDirs]
+DefaultDestDir = 12
+KernelInjector_Device_CoInstaller_CopyFiles = 11
+
+; ================= Class section =====================
+
+[SampleClassReg]
+HKR,,,0,%ClassName%
+HKR,,Icon,,-5
+
+[SourceDisksNames]
+1 = %DiskName%,,,""
+
+[SourceDisksFiles]
+KernelInjector.sys  = 1,,
+WdfCoInstaller$KMDFCOINSTALLERVERSION$.dll=1 ; make sure the number matches with SourceDisksNames
+
+;*****************************************
+; Install Section
+;*****************************************
+
+[Manufacturer]
+%ManufacturerName%=Standard,NT$ARCH$
+
+[Standard.NT$ARCH$]
+%KernelInjector.DeviceDesc%=KernelInjector_Device, Root\KernelInjector ; TODO: edit hw-id
+
+[KernelInjector_Device.NT]
+CopyFiles=Drivers_Dir
+
+[Drivers_Dir]
+KernelInjector.sys
+
+;-------------- Service installation
+[KernelInjector_Device.NT.Services]
+AddService = KernelInjector,%SPSVCINST_ASSOCSERVICE%, KernelInjector_Service_Inst
+
+; -------------- KernelInjector driver install sections
+[KernelInjector_Service_Inst]
+DisplayName    = %KernelInjector.SVCDESC%
+ServiceType    = 1               ; SERVICE_KERNEL_DRIVER
+StartType      = 3               ; SERVICE_DEMAND_START
+ErrorControl   = 1               ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %12%\KernelInjector.sys
+
+;
+;--- KernelInjector_Device Coinstaller installation ------
+;
+
+[KernelInjector_Device.NT.CoInstallers]
+AddReg=KernelInjector_Device_CoInstaller_AddReg
+CopyFiles=KernelInjector_Device_CoInstaller_CopyFiles
+
+[KernelInjector_Device_CoInstaller_AddReg]
+HKR,,CoInstallers32,0x00010000, "WdfCoInstaller$KMDFCOINSTALLERVERSION$.dll,WdfCoInstaller"
+
+[KernelInjector_Device_CoInstaller_CopyFiles]
+WdfCoInstaller$KMDFCOINSTALLERVERSION$.dll
+
+[KernelInjector_Device.NT.Wdf]
+KmdfService =  KernelInjector, KernelInjector_wdfsect
+[KernelInjector_wdfsect]
+KmdfLibraryVersion = $KMDFVERSION$
+
+[Strings]
+SPSVCINST_ASSOCSERVICE= 0x00000002
+ManufacturerName="<Your manufacturer name>" ;TODO: Replace with your manufacturer name
+ClassName="Samples" ; TODO: edit ClassName
+DiskName = "KernelInjector Installation Disk"
+KernelInjector.DeviceDesc = "KernelInjector Device"
+KernelInjector.SVCDESC = "KernelInjector Service"
