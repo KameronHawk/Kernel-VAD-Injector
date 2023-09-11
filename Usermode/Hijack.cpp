@@ -95,7 +95,7 @@ BOOL Hijack::CallDllMain(DWORD ProcessID, DWORD ThreadID, PVOID DllBase, DWORD A
 	}
 
 
-	uintptr_t FuncToHook = ((uintptr_t)ModBase + 0xE0A98);//E0A98PeekMessage
+	uintptr_t FuncToHook = ((uintptr_t)ModBase + 0xE8090);//E8090 SwapChain::Present
 	printf(skCrypt("[*] Shellcode Allocation -> 0x%X\n"), AllocShellCode);
 
 
